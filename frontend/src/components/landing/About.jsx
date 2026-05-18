@@ -38,27 +38,6 @@ function About() {
         {/* Divider */}
         <div className="w-full h-px bg-[#3D0A4F]/30" />
 
-        
-
-        {/* Divider */}
-        <div className="w-full h-px bg-[#3D0A4F]/6" />
-
-        {/* Bottom — Closing statement */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <p className="text-[#3D0A4F]/50 text-base leading-relaxed max-w-xl">
-            Oneclick is not just a study tool — it is a structured learning ecosystem designed for
-            clarity, consistency, and confidence. It exists to make learning feel like a single step:
-            just one click from confusion to understanding.
-          </p>
-
-          <a
-            href="#"
-            className="shrink-0 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-7 py-3 rounded-lg hover:bg-[#E87722] transition-colors duration-200"
-          >
-            Get Started Free
-          </a>
-        </div>
-
       </div>
     </section>
   )
