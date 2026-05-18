@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 
 const headerLinks = [
   { id: 1, name: 'Contact', href: '#contact' },
-  { id: 2, name: 'Login', href: '#login' },
 ]
 
-function Header({ onToggle }) {
+function Header({ onToggle, user }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeHash, setActiveHash] = useState(window.location.hash || '#home')
+  const displayName = user?.username || user?.firstName || "Student"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,12 +85,12 @@ function Header({ onToggle }) {
             )
           })}
           <li>
-            <a
-              href="#register"
-              className="bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg hover:bg-[#E87722] transition-colors duration-200"
+            <span
+              className="inline-flex items-center gap-2 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg"
             >
-              Sign Up
-            </a>
+              <span className="h-2 w-2 rounded-full bg-[#E87722]" />
+              {displayName}
+            </span>
           </li>
         </ul>
 
@@ -125,13 +125,12 @@ function Header({ onToggle }) {
               {link.name}
             </a>
           ))}
-          <a
-            href="#register"
-            onClick={() => setMenuOpen(false)}
-            className="bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg text-center hover:bg-[#E87722] transition-colors duration-200"
+          <span
+            className="inline-flex items-center justify-center gap-2 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg text-center"
           >
-            Sign Up
-          </a>
+            <span className="h-2 w-2 rounded-full bg-[#E87722]" />
+            {displayName}
+          </span>
         </div>
       )}
     </header>

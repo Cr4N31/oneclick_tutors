@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-function Sidebar() {
+function Sidebar({ onLogout }) {
   const [active, setActive] = useState('Course List')
 
   const sidebarItems = [
@@ -65,7 +65,14 @@ function Sidebar() {
       </ul>
 
       {/* Footer */}
-      <div className="px-2 pt-6 border-t border-white/10">
+      <div className="px-2 pt-6 border-t border-white/10 flex flex-col gap-4">
+        <button
+          type="button"
+          onClick={onLogout}
+          className="w-full flex items-center justify-center gap-2 rounded-lg border border-[#E87722]/30 px-4 py-2.5 text-sm font-medium tracking-wide text-[#E87722] hover:bg-[#E87722] hover:text-white transition-colors duration-200"
+        >
+          Logout
+        </button>
         <p className="text-white/20 text-[10px] tracking-widest uppercase">
           Oneclick Tutors
         </p>

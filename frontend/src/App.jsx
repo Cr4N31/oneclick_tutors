@@ -10,6 +10,8 @@ const landingHashes = ["#home", "#about", "#features", "#pricing", "#contact"]
 
 function App() {
   const [hash, setHash] = useState(window.location.hash)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [mockUser, setMockUser] = useState(null)
 
   useEffect(() => {
     AOS.init({
@@ -37,11 +39,34 @@ function App() {
   const showAuth = authHashes.includes(hash)
   const showLanding = landingHashes.includes(hash)
 
+  const handleAuthenticated = (user) => {
+    setMockUser(user)
+    setIsAuthenticated(true)
+    window.history.replaceState(null, "", window.location.pathname)
+    setHash("")
+  }
+
+  const handleLogout = () => {
+    setMockUser(null)
+    setIsAuthenticated(false)
+    window.location.hash = "#login"
+    setHash("#login")
+  }
+
   return (
     <>
-      {showAuth && <AuthLayout key={authMode} initialMode={authMode} />}
+      {isAuthenticated && !showLanding && (
+        <Layout user={mockUser} onLogout={handleLogout} />
+      )}
+      {!isAuthenticated && showAuth && (
+        <AuthLayout
+          key={authMode}
+          initialMode={authMode}
+          onAuthenticated={handleAuthenticated}
+        />
+      )}
       {showLanding && <LandingPage />}
-      {!showAuth && !showLanding && <Layout />}
+      {!isAuthenticated && !showAuth && !showLanding && <LandingPage />}
     </>
   )
 }

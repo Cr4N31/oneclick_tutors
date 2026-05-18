@@ -1,9 +1,6 @@
 import { useState } from "react"
 function RegisterForm({ onSwitch, onSubmit }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [level, setLevel] = useState(0)
-
+    const [ error, setError ] = useState("")
   const courses = Array.from({ length: 12 }, (_, index) => index + 1)
   const departments = [
     "Computer Science",
@@ -15,8 +12,44 @@ function RegisterForm({ onSwitch, onSubmit }) {
     "Education",
   ]
 
+  function handleSubmit(event) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const selectedCourses = courses
+      .map((courseNumber) => formData.get(`course${courseNumber}`)?.trim())
+      .filter(Boolean)
+    const password = formData.get("password")
+    const confirmPassword = formData.get("confirmPassword")
+
+    if (selectedCourses.length < 9 || selectedCourses.length > 12) {
+      event.currentTarget.reportValidity()
+      return
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      return
+    }
+
+    setError("")
+
+    onSubmit?.({
+      authType: "register",
+      username: formData.get("username"),
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      level: formData.get("level"),
+      department: formData.get("department"),
+      courses: selectedCourses,
+      email: formData.get("email"),
+    })
+
+    event.currentTarget.reset()
+  }
+
   return (
-    <form className="flex flex-col gap-6 w-full" onSubmit={(event) => event.preventDefault()} data-aos="fade-up">
+    <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit} data-aos="fade-up">
       <div className="flex flex-col gap-2 text-center">
         <h1 className="text-[#3D0A4F] text-xl font-semibold tracking-wide">
           Create Account
@@ -27,6 +60,17 @@ function RegisterForm({ onSwitch, onSubmit }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <label className="flex flex-col gap-1 text-[#3D0A4F]/90 text-xs tracking-widest uppercase sm:col-span-2">
+          Username
+          <input
+            type="text"
+            name="username"
+            placeholder="Choose a username"
+            required
+            className="pl-0 py-2 border-b border-[#3D0A4F]/15 focus:border-[#E87722] outline-none text-sm normal-case tracking-normal text-[#3D0A4F] placeholder:text-[#3D0A4F]/30 transition-colors duration-150 bg-transparent"
+          />
+        </label>
+
         <label className="flex flex-col gap-1 text-[#3D0A4F]/90 text-xs tracking-widest uppercase">
           First Name
           <input
@@ -139,6 +183,8 @@ function RegisterForm({ onSwitch, onSubmit }) {
           />
         </label>
       </div>
+
+      {error && <span className="text-red-500 text-xs p-4">{error}</span>}
 
       <button
         type="submit"

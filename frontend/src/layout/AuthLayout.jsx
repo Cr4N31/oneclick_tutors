@@ -5,7 +5,7 @@ import AuthToggle from "../components/auth/AuthToggle"
 import LoginForm from "../components/auth/LoginForm"
 import RegisterForm from "../components/auth/RegisterForm"
 
-function AuthLayout({ initialMode = "register" }) {
+function AuthLayout({ initialMode = "register", onAuthenticated }) {
   const [activeMode, setActiveMode] = useState(initialMode)
   const isLogin = activeMode === "login"
 
@@ -62,9 +62,15 @@ function AuthLayout({ initialMode = "register" }) {
             </div>
 
             {isLogin ? (
-              <LoginForm onSwitch={() => setActiveMode("register")} />
+              <LoginForm
+                onSwitch={() => setActiveMode("register")}
+                onSubmit={onAuthenticated}
+              />
             ) : (
-              <RegisterForm onSwitch={() => setActiveMode("login")} />
+              <RegisterForm
+                onSwitch={() => setActiveMode("login")}
+                onSubmit={onAuthenticated}
+              />
             )}
           </div>
         </section>
