@@ -13,7 +13,7 @@ function Sidebar({ onLogout }) {
   ]
 
   return (
-    <aside className="font-product-sans flex flex-col w-[240px] h-screen bg-[#3D0A4F]/70 px-5 py-8 border-r border-[#E87722]/40">
+    <aside className="font-product-sans flex flex-col w-[240px] h-screen bg-[#3D0A4F] px-5 py-8 border-r border-[#E87722]/40">
 
       {/* Logo / Brand */}
       <div className="mb-10 px-2">
@@ -41,7 +41,7 @@ function Sidebar({ onLogout }) {
                   text-base font-light tracking-wide transition-all duration-200
                   ${isActive
                     ? 'bg-[#3D0A4F]/30 text-[#E87722]'
-                    : 'text-[#E87722] hover:text-[#3D0A4F] hover:bg-/5'
+                    : 'text-white hover:text-[#E87722] hover:bg-/5'
                   }
                 `}
               >
