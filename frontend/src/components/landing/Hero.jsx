@@ -28,14 +28,14 @@ function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
             <a
-              href="#"
+              href="#auth"
               className="bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-7 py-3 rounded-lg hover:bg-[#E87722] transition-colors duration-200"
             >
               Get Started Free
             </a>
 
             <a
-              href="#"
+              href="#auth"
               className="border border-[#3D0A4F]/15 text-[#3D0A4F]/70 text-sm font-medium px-7 py-3 rounded-lg hover:border-[#E87722]/40 hover:text-[#3D0A4F] transition-all duration-200"
             >
               See How It Works

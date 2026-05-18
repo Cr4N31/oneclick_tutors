@@ -83,7 +83,7 @@ function Features() {
             clarity, consistency, and confidence. Just one click from confusion to understanding.
           </p>
           <a
-            href="#"
+            href="#auth"
             className="shrink-0 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-7 py-3 rounded-lg hover:bg-[#E87722] transition-colors duration-200"
           >
             Get Started Free

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Header from './Header'
-import Sidebar from './Sidebar'
+import Header from '../components/shared/Header'
+import Sidebar from '../components/shared/Sidebar'
 
 function Layout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)

@@ -1,9 +1,36 @@
+import { useState } from 'react' 
 import oneclickIcon from "../../../assets/imgs/ONECLICK-TUTOR ASSEST-03.png"
 
-function LoginForm() {
+function LoginForm({ onSwitch, onSubmit }) {
+    const [ emailAddress, setEmailAddress ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const [ error, setError ] = useState("")
+    
+    function handleValidation(e){
+        e.preventDefault();
+
+        if(!password && !emailAddress){
+            setError("Please fill in input fields")
+            return;
+        };
+        if(password.length < 10){
+            setError("Password is too short")
+            return;
+        }
+
+        onSubmit?.({ email, password});
+        setEmailAddress("");
+        setPassword("");
+        setError("");
+        
+    }
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-white">
-      <div className="flex flex-col gap-6 w-full max-w-sm px-6">
+    <form 
+        className="flex flex-col gap-6 w-full" 
+        onSubmit={handleValidation} 
+        data-aos="fade-up"
+    >
 
         {/* Brand */}
         <div className="flex flex-col items-center gap-2 mb-2">
@@ -31,13 +58,18 @@ function LoginForm() {
             >
               Email Address
             </label>
-            <input
-              className="pl-0 py-2 border-b border-[#3D0A4F]/15 focus:border-[#E87722] outline-none text-sm text-[#3D0A4F] placeholder:text-[#3D0A4F]/30 transition-colors duration-150 bg-transparent"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="you@example.com"
-            />
+          <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                aria-label="Email address"
+                placeholder="you@example.com" 
+                value={emailAddress}
+                onChange={(e) => setEmailAddress(e.target.value)} 
+                required 
+                className="pl-0 py-2 border-b border-[#3D0A4F]/15 focus:border-[#E87722] outline-none text-sm text-[#3D0A4F] placeholder:text-[#3D0A4F]/30 transition-colors duration-150 bg-transparent"
+                />
+
           </div>
 
           {/* Password */}
@@ -58,9 +90,17 @@ function LoginForm() {
               type="password"
               id="password"
               name="password"
+              required
               placeholder="••••••••"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+        </div>
+
+        <div>
+            { error && <span className='text-sm text-red-500'>
+                    {error}
+                </span>}
         </div>
 
         {/* Submit */}
@@ -94,13 +134,16 @@ function LoginForm() {
         {/* Sign up nudge */}
         <p className="text-center text-xs text-[#3D0A4F]/50">
           Don't have an account?{" "}
-          <a href="#" className="text-[#E87722] hover:opacity-70 transition-opacity">
+          <button
+            type="button"
+            onClick={onSwitch}
+            className="text-[#E87722] hover:opacity-70 transition-opacity"
+          >
             Sign up
-          </a>
+          </button>
         </p>
 
-      </div>
-    </div>
+    </form>
   )
 }
 

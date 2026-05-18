@@ -5,7 +5,7 @@ const navList = [
   { id: 2, name: "About", href: "#about" },
   { id: 3, name: "Features", href: "#features" },
   { id: 4, name: "Pricing", href: "#pricing" },
-  { id: 5, name: "Contact Us", href: "#contact" },
+  { id: 5, name: "Contact", href: "#contact" },
 ]
 
 function LandingNav() {
@@ -77,7 +77,7 @@ function LandingNav() {
                 <a
                   href={n.href}
                   className={`
-                    relative rounded-full px-2.5 py-2 text-xs md:text-sm cursor-pointer transition-all duration-200
+                    relative rounded-full px-1 md:px-2 py-2 text-xs md:text-sm cursor-pointer transition-all duration-200
                     ${activeSection === n.href.replace("#", "")
                       ? 'bg-[#E87722]/10 text-[#E87722]'
                       : 'text-[#3D0A4F]/70 hover:text-[#E87722]'

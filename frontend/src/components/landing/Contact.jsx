@@ -4,19 +4,18 @@ function Contact() {
       id: 1,
       label: "Email",
       value: "hello@yourdomain.com",
-      helper: "Replace with your support email",
+      helper: "Reach out to us at our email",
     },
     {
       id: 2,
       label: "Phone",
       value: "+234 000 000 0000",
-      helper: "Replace with your business line",
+      helper: "Reach out to us at our business line",
     },
     {
       id: 3,
       label: "Location",
       value: "Lagos, Nigeria",
-      helper: "Replace with your office or service area",
     },
   ]
 
@@ -67,6 +66,7 @@ function Contact() {
                 type="text"
                 placeholder="Your name"
                 className="rounded-lg border border-[#3D0A4F]/10 px-4 py-3 text-sm font-normal text-[#3D0A4F] outline-none transition-colors duration-200 placeholder:text-[#3D0A4F]/30 focus:border-[#E87722]/50"
+                required
               />
             </label>
             <label className="flex flex-col gap-2 text-[#3D0A4F] text-xs font-semibold tracking-wide">
@@ -75,6 +75,7 @@ function Contact() {
                 type="email"
                 placeholder="you@example.com"
                 className="rounded-lg border border-[#3D0A4F]/10 px-4 py-3 text-sm font-normal text-[#3D0A4F] outline-none transition-colors duration-200 placeholder:text-[#3D0A4F]/30 focus:border-[#E87722]/50"
+                required
               />
             </label>
           </div>
@@ -85,6 +86,7 @@ function Contact() {
               type="text"
               placeholder="How can we help?"
               className="rounded-lg border border-[#3D0A4F]/10 px-4 py-3 text-sm font-normal text-[#3D0A4F] outline-none transition-colors duration-200 placeholder:text-[#3D0A4F]/30 focus:border-[#E87722]/50"
+              required
             />
           </label>
 
@@ -94,6 +96,7 @@ function Contact() {
               rows="6"
               placeholder="Write your message here..."
               className="resize-none rounded-lg border border-[#3D0A4F]/10 px-4 py-3 text-sm font-normal text-[#3D0A4F] outline-none transition-colors duration-200 placeholder:text-[#3D0A4F]/30 focus:border-[#E87722]/50"
+              required
             />
           </label>
 
