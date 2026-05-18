@@ -27,7 +27,7 @@ function Features() {
   ]
 
   return (
-    <section className="bg-[#3D0A4F]/[0.02] px-8 py-24">
+    <section id="features" className="bg-[#3D0A4F]/[0.02] px-8 py-24 scroll-mt-24">
       <div className="max-w-6xl mx-auto flex flex-col gap-16">
 
         {/* Section Header */}

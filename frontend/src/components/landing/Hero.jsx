@@ -1,7 +1,7 @@
 
 function Hero() {
   return (
-    <section className="min-h-screen flex items-center px-8 pt-24 pb-16 bg-white">
+    <section id="home" className="min-h-screen flex items-center px-8 pt-24 pb-16 bg-white scroll-mt-24">
       <div className="max-w-6xl mx-auto w-full flex flex-col-reverse md:flex-row items-center justify-between gap-12">
 
         {/* Left — Text */}
