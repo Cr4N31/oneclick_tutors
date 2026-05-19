@@ -55,14 +55,6 @@ function App() {
     setHash("")
   }
 
-  const handleUserUpdate = (updates) => {
-    setMockUser((currentUser) => {
-      const nextUser = { ...currentUser, ...updates }
-      localStorage.setItem(storedUserKey, JSON.stringify(nextUser))
-      return nextUser
-    })
-  }
-
   const handleLogout = () => {
     localStorage.removeItem(storedUserKey)
     setMockUser(null)
@@ -73,11 +65,7 @@ function App() {
   return (
     <>
       {isAuthenticated && !showLanding && (
-        <Layout
-          user={mockUser}
-          onLogout={handleLogout}
-          onUserUpdate={handleUserUpdate}
-        />
+        <Layout user={mockUser} onLogout={handleLogout} />
       )}
       {!isAuthenticated && showAuth && (
         <AuthLayout

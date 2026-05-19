@@ -3,7 +3,7 @@ import AddCourseCard from './AddCourseCard'
 
 function CourseGrid({ courses, editing, onRemove, onAdd, onUpdate }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-aos="fade-up">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {courses.map((course, i) => (
         <CourseCard
           key={i}
