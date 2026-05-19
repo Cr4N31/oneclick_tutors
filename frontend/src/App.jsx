@@ -7,11 +7,20 @@ import AuthLayout from "./layout/AuthLayout"
 
 const authHashes = ["#auth", "#login", "#register"]
 const landingHashes = ["#home", "#about", "#features", "#pricing", "#contact"]
+const storedUserKey = "oneclick-user"
 
 function App() {
   const [hash, setHash] = useState(window.location.hash)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [mockUser, setMockUser] = useState(null)
+  const [mockUser, setMockUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem(storedUserKey)
+      return savedUser ? JSON.parse(savedUser) : null
+    } catch {
+      localStorage.removeItem(storedUserKey)
+      return null
+    }
+  })
+  const isAuthenticated = Boolean(mockUser)
 
   useEffect(() => {
     AOS.init({
@@ -40,15 +49,23 @@ function App() {
   const showLanding = landingHashes.includes(hash)
 
   const handleAuthenticated = (user) => {
+    localStorage.setItem(storedUserKey, JSON.stringify(user))
     setMockUser(user)
-    setIsAuthenticated(true)
     window.history.replaceState(null, "", window.location.pathname)
     setHash("")
   }
 
+  const handleUserUpdate = (updates) => {
+    setMockUser((currentUser) => {
+      const nextUser = { ...currentUser, ...updates }
+      localStorage.setItem(storedUserKey, JSON.stringify(nextUser))
+      return nextUser
+    })
+  }
+
   const handleLogout = () => {
+    localStorage.removeItem(storedUserKey)
     setMockUser(null)
-    setIsAuthenticated(false)
     window.location.hash = "#login"
     setHash("#login")
   }
@@ -56,7 +73,11 @@ function App() {
   return (
     <>
       {isAuthenticated && !showLanding && (
-        <Layout user={mockUser} onLogout={handleLogout} />
+        <Layout
+          user={mockUser}
+          onLogout={handleLogout}
+          onUserUpdate={handleUserUpdate}
+        />
       )}
       {!isAuthenticated && showAuth && (
         <AuthLayout

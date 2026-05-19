@@ -1,5 +1,4 @@
 import { useState } from 'react' 
-import oneclickIcon from "../../../assets/imgs/ONECLICK-TUTOR ASSEST-03.png"
 
 function LoginForm({ onSwitch, onSubmit }) {
     const [ username, setUsername ] = useState("");
@@ -41,11 +40,6 @@ function LoginForm({ onSwitch, onSubmit }) {
 
         {/* Brand */}
         <div className="flex flex-col items-center gap-2 mb-2">
-          <img
-            src={oneclickIcon}
-            alt="oneclick_icon"
-            className="w-10"
-          />
           <h1 className="text-[#3D0A4F] text-xl font-semibold tracking-wide">
             Welcome Back
           </h1>

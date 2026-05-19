@@ -1,16 +1,12 @@
-import { useState } from 'react'
+const sidebarItems = [
+  { key: 'courses', name: 'Course List', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779110381/book-open-svgrepo-com_npuqmz.svg' },
+  { key: 'summary', name: 'Summary', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/summary_cwctfr.svg' },
+  { key: 'quiz', name: 'Take a quiz', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/question_p26n2v.svg' },
+  { key: 'progress', name: 'Evaluate Progress', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779111118/course-up-svgrepo-com_ha2shl.svg' },
+  { key: 'details', name: 'Personal Details', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/details_ccmwlp.svg' },
+]
 
-
-function Sidebar({ onLogout }) {
-  const [active, setActive] = useState('Course List')
-
-  const sidebarItems = [
-    { name: 'Course List', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779110381/book-open-svgrepo-com_npuqmz.svg' },
-    { name: 'Summary', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/summary_cwctfr.svg' },
-    { name: 'Take a quiz', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/question_p26n2v.svg' },
-    { name: 'Evaluate Progress', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779111118/course-up-svgrepo-com_ha2shl.svg' },
-    { name: 'Personal Details', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/details_ccmwlp.svg' },
-  ]
+function Sidebar({ activePage, onPageChange, onLogout }) {
 
   return (
     <aside className="font-product-sans flex flex-col w-[240px] h-screen bg-[#3D0A4F] px-5 py-8 border-r border-[#E87722]/40">
@@ -31,11 +27,11 @@ function Sidebar({ onLogout }) {
       {/* Nav Items */}
       <ul className="flex flex-col gap-1 flex-1">
         {sidebarItems.map((s) => {
-          const isActive = active === s.name
+          const isActive = activePage === s.key
           return (
             <li key={s.name}>
               <button
-                onClick={() => setActive(s.name)}
+                onClick={() => onPageChange(s.key)}
                 className={`
                   w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
                   text-base font-light tracking-wide transition-all duration-200
