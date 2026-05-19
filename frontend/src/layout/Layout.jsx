@@ -1,21 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/shared/Header'
 import Sidebar from '../components/shared/Sidebar'
 import RegisteredCourseList from '../pages/RegisteredCourseList'
-import PersonalDetailsPage from '../pages/PersonalDetailsPage'
 
 function Layout({ user, onLogout }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [activePage, setActivePage] = useState('Course List')
+  const [activePage, setActivePage] = useState(() => {
+    if (typeof window === 'undefined') return 'courses'
+    return window.localStorage.getItem('activePage') || 'courses'
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem('activePage', activePage)
+  }, [activePage])
 
   const renderPage = () => {
     switch (activePage) {
-      case 'courses':      return <RegisteredCourseList />
-      case 'summary':          return <div className="text-[#3D0A4F]">Summary page coming soon</div>
-      case 'quiz':      return <div className="text-[#3D0A4F]">Quiz page coming soon</div>
-      case 'Progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>
-      case 'details': return <PersonalDetailsPage/>
-      default:                 return <RegisteredCourseList />
+      case 'courses': return <RegisteredCourseList />
+      case 'summary': return <div className="text-[#3D0A4F]">Summary page coming soon</div>
+      case 'quiz': return <div className="text-[#3D0A4F]">Quiz page coming soon</div>
+      case 'progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>
+      case 'examCondition': return <div className="text-[#3D0A4F]">Exam condition page coming soon</div>
+      default: return <RegisteredCourseList />
     }
   }
 

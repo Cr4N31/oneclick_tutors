@@ -9,7 +9,7 @@ function StatBar({total}){
         { total: requiredToMeetMinimum, text: "Needed for minimum"}
     ]
     return(
-        <section data-aos="fade-up">
+        <section>
             <div className="flex gap-2 bg-[#E87722]/10 p-8 md:flex-row flex-col justify-between items-center">
                 {stats.map((s) => (
                     <div key={s.text} className="text-center w-full py-8 bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(61,10,79,0.12)] saturate-150">

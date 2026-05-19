@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PersonalDetailsPage from '../components/courseList/PersonalDetailsPage';
 import CourseHeader from "../components/courseList/CourseHeader";
 import StatBar from '../components/courseList/StatBar';
 import CourseGrid from '../components/courseList/CourseGrid';
@@ -101,6 +102,7 @@ function RegisteredCourseList({ user, onUserUpdate }){
 
     return(
         <main>
+            <PersonalDetailsPage/>
             <CourseHeader
                 total={courses.length}
                 onEdit={handleEdit}

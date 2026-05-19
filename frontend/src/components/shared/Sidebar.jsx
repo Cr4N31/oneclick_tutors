@@ -3,7 +3,7 @@ const sidebarItems = [
   { key: 'summary', name: 'Summary', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/summary_cwctfr.svg' },
   { key: 'quiz', name: 'Take a quiz', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/question_p26n2v.svg' },
   { key: 'progress', name: 'Evaluate Progress', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779111118/course-up-svgrepo-com_ha2shl.svg' },
-  { key: 'details', name: 'Personal Details', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/details_ccmwlp.svg' },
+  { key: 'examCondition', name: 'Exam Condition', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/details_ccmwlp.svg' },
 ]
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
