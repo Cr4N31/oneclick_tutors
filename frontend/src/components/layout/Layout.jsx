@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Header from '../components/shared/Header'
-import Sidebar from '../components/shared/Sidebar'
+import Header from '../shared/Header'
+import Sidebar from '../shared/Sidebar'
 import RegisteredCourseList from '../pages/RegisteredCourseList'
 
 function Layout({ user, onLogout }) {

@@ -1,9 +1,9 @@
 import { useState } from "react"
-import oneclickLogo from "../../assets/imgs/oneclick_tutors_logo.png"
-import oneclickIcon from "../../assets/imgs/ONECLICK-TUTOR ASSEST-03.png"
-import AuthToggle from "../components/auth/AuthToggle"
-import LoginForm from "../components/auth/LoginForm"
-import RegisterForm from "../components/auth/RegisterForm"
+import oneclickLogo from "../../../assets/imgs/oneclick_tutors_logo.png"
+import oneclickIcon from "../../../assets/imgs/ONECLICK-TUTOR ASSEST-03.png"
+import AuthToggle from "../auth/AuthToggle"
+import LoginForm from "../auth/LoginForm"
+import RegisterForm from "../auth/RegisterForm"
 
 function AuthLayout({ initialMode = "register", onAuthenticated }) {
   const [activeMode, setActiveMode] = useState(initialMode)

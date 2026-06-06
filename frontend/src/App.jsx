@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import LandingPage from "./layout/LandingPage"
-import Layout from "./layout/Layout"
-import AuthLayout from "./layout/AuthLayout"
+import LandingPage from "./components/layout/LandingPage"
+import Layout from "./components/layout/Layout"
+import AuthLayout from "./components/layout/AuthLayout"
+import UploadPdf from "./upload/pages/UploadPdf"
 
 const authHashes = ["#auth", "#login", "#register"]
 const landingHashes = ["#home", "#about", "#features", "#pricing", "#contact"]
+const uploadHash = "#upload" 
 const storedUserKey = "oneclick-user"
 
 function App() {
+  const [data, setData] = useState('')
   const [hash, setHash] = useState(window.location.hash)
   const [mockUser, setMockUser] = useState(() => {
     try {
@@ -57,27 +60,37 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem(storedUserKey)
-    setMockUser(null)
+    setMockUser(null) 
     window.location.hash = "#login"
     setHash("#login")
   }
 
+  useEffect(() => {
+    fetch("http://localhost:3000/")
+      .then(res => res.json())
+      .then(data => setData(data.message))
+      .catch(err => console.error("Error fetching from backend:", err))
+  }, [])
+
   return (
-    <>
-      {isAuthenticated && !showLanding && (
-        <Layout user={mockUser} onLogout={handleLogout} />
-      )}
-      {!isAuthenticated && showAuth && (
-        <AuthLayout
-          key={authMode}
-          initialMode={authMode}
-          onAuthenticated={handleAuthenticated}
-        />
-      )}
-      {showLanding && <LandingPage />}
-      {!isAuthenticated && !showAuth && !showLanding && <LandingPage />}
-    </>
-  )
+  <>
+    {hash === "#upload" ? (
+      <UploadPdf />
+    ) : isAuthenticated && !showLanding ? (
+      <Layout user={mockUser} onLogout={handleLogout} />
+    ) : !isAuthenticated && showAuth ? (
+      <AuthLayout
+        key={authMode}
+        initialMode={authMode}
+        onAuthenticated={handleAuthenticated}
+      />
+    ) : showLanding ? (
+      <LandingPage />
+    ) : (
+      <LandingPage />
+    )}
+  </>
+)
 }
 
 export default App
