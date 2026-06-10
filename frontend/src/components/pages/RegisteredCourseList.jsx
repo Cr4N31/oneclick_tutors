@@ -102,7 +102,7 @@ function RegisteredCourseList({ user, onUserUpdate }){
 
     return(
         <main>
-            <PersonalDetailsPage/>
+            <PersonalDetailsPage user={user}/>
             <CourseHeader
                 total={courses.length}
                 onEdit={handleEdit}

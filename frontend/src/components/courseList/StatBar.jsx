@@ -10,7 +10,7 @@ function StatBar({total}){
     ]
     return(
         <section>
-            <div className="flex gap-2 bg-[#E87722]/10 p-8 md:flex-row flex-col justify-between items-center">
+            <div className="flex gap-2 bg-white p-8 md:flex-row flex-col justify-between items-center">
                 {stats.map((s) => (
                     <div key={s.text} className="text-center w-full py-8 bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(61,10,79,0.12)] saturate-150">
                         <h2 className="text-[#E87722] font-bold text-2xl">{s.total}</h2>

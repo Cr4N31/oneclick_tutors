@@ -1,14 +1,23 @@
 import { Upload } from "lucide-react";
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 function UploadComponent() {
   const fileInputRef = useRef(null);
+  const [courseCode, setCourseCode] = useState(() => localStorage.getItem('oc_courseCode') || '');
+  const [courseTitle, setCourseTitle] = useState(() => localStorage.getItem('oc_courseTitle') || '');
   const [files, setFiles] = useState([]);
-  const [courseCode, setCourseCode] = useState('');
-  const [courseTitle, setCourseTitle] = useState('');
   const [status, setStatus] = useState({});
 
   const handleClick = () => fileInputRef.current.click();
+
+  // Persist course fields
+  useEffect(() => {
+    localStorage.setItem('oc_courseCode', courseCode);
+  }, [courseCode]);
+
+  useEffect(() => {
+    localStorage.setItem('oc_courseTitle', courseTitle);
+  }, [courseTitle]);
 
   const handleFiles = (incoming) => {
     setFiles(prev => [...prev, ...Array.from(incoming)]);
@@ -39,7 +48,28 @@ function UploadComponent() {
       });
       const data = await res.json();
       console.log('Response:', data);
-      setStatus(prev => ({ ...prev, [index]: 'done' }));
+
+      // Only clear on success
+      if (res.ok) {
+        setStatus(prev => ({ ...prev, [index]: 'done' }));
+        // Remove just this file after short delay
+        setTimeout(() => {
+          setFiles(prev => prev.filter((_, i) => i !== index));
+          setStatus(prev => {
+            const next = { ...prev };
+            delete next[index];
+            return next;
+          });
+        }, 1500);
+
+        // Clear course fields only if all files are done
+        setCourseCode('');
+        setCourseTitle('');
+        localStorage.removeItem('oc_courseCode');
+        localStorage.removeItem('oc_courseTitle');
+      } else {
+        setStatus(prev => ({ ...prev, [index]: 'error' }));
+      }
     } catch (err) {
       console.error('Upload failed:', err.message);
       setStatus(prev => ({ ...prev, [index]: 'error' }));

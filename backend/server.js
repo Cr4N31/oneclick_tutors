@@ -5,6 +5,7 @@ const PORT = 3000;
 const pool = require('./config/db');
 const uploadRoute = require('./routes/upload');
 const viewerRoute = require('./routes/viewer');
+const authRoute = require('./routes/auth')
 
 
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/upload', uploadRoute);
 app.use('/api/viewer', viewerRoute);
+app.use('/api/auth', authRoute)
 
 
 

@@ -16,7 +16,7 @@ function Layout({ user, onLogout }) {
 
   const renderPage = () => {
     switch (activePage) {
-      case 'courses': return <RegisteredCourseList />
+      case 'courses': return <RegisteredCourseList user={user} />
       case 'summary': return <div className="text-[#3D0A4F]">Summary page coming soon</div>
       case 'quiz': return <div className="text-[#3D0A4F]">Quiz page coming soon</div>
       case 'progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>

@@ -7,7 +7,41 @@ import RegisterForm from "../auth/RegisterForm"
 
 function AuthLayout({ initialMode = "register", onAuthenticated }) {
   const [activeMode, setActiveMode] = useState(initialMode)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const isLogin = activeMode === "login"
+
+  const handleSubmit = async (formData) => {
+    setError('')
+    setLoading(true)
+
+    try {
+      if (formData.authType === 'register') {
+        const res = await fetch('http://localhost:3000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        })
+        const data = await res.json()
+        if (!res.ok) { setError(data.error || 'Registration failed.'); return; }
+        onAuthenticated(data)
+
+      } else {
+        const res = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, password: formData.password }),
+        })
+        const data = await res.json()
+        if (!res.ok) { setError(data.error || 'Login failed.'); return; }
+        onAuthenticated(data)
+      }
+    } catch (err) {
+      setError('Could not connect to server.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <main className="min-h-screen bg-white px-6 py-8 flex items-center justify-center">
@@ -15,7 +49,6 @@ function AuthLayout({ initialMode = "register", onAuthenticated }) {
         <aside className="hidden lg:flex flex-col justify-between rounded-2xl bg-[#3D0A4F] p-8 text-white">
           <div className="flex flex-col gap-10">
             <img src={oneclickLogo} alt="Oneclick Tutors" className="w-48" />
-
             <div className="flex flex-col gap-4">
               <span className="text-[#E87722] text-xs tracking-widest uppercase font-semibold">
                 Student Access
@@ -28,7 +61,6 @@ function AuthLayout({ initialMode = "register", onAuthenticated }) {
               </p>
             </div>
           </div>
-
           <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
             {["Courses", "Notes", "Quizzes"].map((item) => (
               <div key={item} className="flex flex-col gap-1">
@@ -48,11 +80,7 @@ function AuthLayout({ initialMode = "register", onAuthenticated }) {
                   Oneclick Tutors
                 </span>
               </a>
-
-              <a
-                href="#home"
-                className="text-[#3D0A4F]/45 text-xs font-semibold tracking-wide hover:text-[#E87722] transition-colors duration-150"
-              >
+              <a href="#home" className="text-[#3D0A4F]/45 text-xs font-semibold tracking-wide hover:text-[#E87722] transition-colors duration-150">
                 Back Home
               </a>
             </div>
@@ -61,15 +89,23 @@ function AuthLayout({ initialMode = "register", onAuthenticated }) {
               <AuthToggle activeMode={activeMode} onChange={setActiveMode} />
             </div>
 
+            {error && (
+              <p className="text-red-500 text-xs mb-4 text-center">{error}</p>
+            )}
+
+            {loading && (
+              <p className="text-[#3D0A4F]/40 text-xs mb-4 text-center">Please wait...</p>
+            )}
+
             {isLogin ? (
               <LoginForm
                 onSwitch={() => setActiveMode("register")}
-                onSubmit={onAuthenticated}
+                onSubmit={handleSubmit}
               />
             ) : (
               <RegisterForm
                 onSwitch={() => setActiveMode("login")}
-                onSubmit={onAuthenticated}
+                onSubmit={handleSubmit}
               />
             )}
           </div>
