@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import LandingPage from "./components/layout/LandingPage"
-import Layout from "./components/layout/Layout"
-import AuthLayout from "./components/layout/AuthLayout"
-import UploadPdf from "./upload/pages/UploadPdf"
-import Loader from "./components/shared/Loader"
+import LandingPage from "./user/layout/LandingPage"
+import Layout from "./user/layout/Layout"
+import AuthLayout from "./user/layout/AuthLayout"
+import UploadPdf from "./admin/pages/UploadPdf"
+import Loader from "./user/shared/Loader"
 
 const authHashes = ["#auth", "#login", "#register"]
 const landingHashes = ["#home", "#about", "#features", "#pricing", "#contact"]

@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
 
-const headerLinks = [
-  { id: 1, name: 'Contact', href: '#contact' },
-]
-
 function Header({ onToggle, user }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -64,26 +60,6 @@ function Header({ onToggle, user }) {
 
         {/* Nav */}
         <ul className="hidden md:flex items-center tracking-wider gap-3">
-          {headerLinks.map((link) => {
-            const isActive = activeHash === link.href
-
-            return (
-              <li key={link.id}>
-                <a
-                  href={link.href}
-                  className={`
-                    relative rounded-full px-3 py-2 text-sm cursor-pointer transition-all duration-200
-                    ${isActive
-                      ? 'bg-[#E87722]/10 text-[#E87722]'
-                      : 'text-[#3D0A4F]/70 hover:text-[#E87722]'
-                    }
-                  `}
-                >
-                  {link.name}
-                </a>
-              </li>
-            )
-          })}
           <li>
             <span
               className="inline-flex items-center gap-2 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg"
@@ -111,20 +87,6 @@ function Header({ onToggle, user }) {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden mt-2 rounded-2xl border border-[#3D0A4F]/8 bg-white/95 backdrop-blur-md shadow-[0_8px_32px_rgba(61,10,79,0.12)] p-4 flex flex-col gap-2">
-          {headerLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className={`rounded-full px-3 py-2 text-sm tracking-wide transition-colors duration-150 ${
-                activeHash === link.href
-                  ? 'bg-[#E87722]/10 text-[#E87722]'
-                  : 'text-[#3D0A4F]/70 hover:text-[#E87722]'
-              }`}
-            >
-              {link.name}
-            </a>
-          ))}
           <span
             className="inline-flex items-center justify-center gap-2 bg-[#3D0A4F] text-white text-sm font-semibold tracking-wide px-5 py-2.5 rounded-lg text-center"
           >

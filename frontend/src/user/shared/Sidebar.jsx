@@ -4,6 +4,7 @@ const sidebarItems = [
   { key: 'quiz', name: 'Take a quiz', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/question_p26n2v.svg' },
   { key: 'progress', name: 'Evaluate Progress', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1779111118/course-up-svgrepo-com_ha2shl.svg' },
   { key: 'examCondition', name: 'Exam Condition', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/icons/details_ccmwlp.svg' },
+  { key: 'contact', name: 'Contact', icon: 'https://res.cloudinary.com/dapzvtbty/image/upload/v1781528383/support-svgrepo-com_a4tsnx.svg'}
 ]
 
 function Sidebar({ activePage, onPageChange, onLogout }) {
@@ -34,7 +35,7 @@ function Sidebar({ activePage, onPageChange, onLogout }) {
                 onClick={() => onPageChange(s.key)}
                 className={`
                   w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-                  text-base font-light tracking-wide transition-all duration-200
+                  text-sm font-light tracking-wide transition-all duration-200
                   ${isActive
                     ? 'bg-[#3D0A4F]/30 text-[#E87722]'
                     : 'text-white hover:text-[#E87722] hover:bg-/5'

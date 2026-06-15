@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, BookOpen, FileText } from 'lucide-react';
-import Loader from '../../../components/shared/Loader';
+import Loader from '../../../../user/shared/Loader';
 
 function Viewer() {
   const [courses, setCourses] = useState([]);

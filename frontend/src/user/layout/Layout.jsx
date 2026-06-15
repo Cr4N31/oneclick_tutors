@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Header from '../shared/Header'
 import Sidebar from '../shared/Sidebar'
 import RegisteredCourseList from '../pages/RegisteredCourseList'
+import SummaryPage from '../pages/SummaryPage'
+import Contact from '../components/landing/Contact'
 
 function Layout({ user, onLogout }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -17,10 +19,11 @@ function Layout({ user, onLogout }) {
   const renderPage = () => {
     switch (activePage) {
       case 'courses': return <RegisteredCourseList user={user} />
-      case 'summary': return <div className="text-[#3D0A4F]">Summary page coming soon</div>
+      case 'summary': return <SummaryPage user={user}/>
       case 'quiz': return <div className="text-[#3D0A4F]">Quiz page coming soon</div>
       case 'progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>
       case 'examCondition': return <div className="text-[#3D0A4F]">Exam condition page coming soon</div>
+      case 'contact' : return <Contact/>
       default: return <RegisteredCourseList />
     }
   }

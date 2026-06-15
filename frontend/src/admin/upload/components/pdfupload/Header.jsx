@@ -1,4 +1,4 @@
-import oneclick from '../../../../assets/imgs/ONECLICK-TUTOR ASSEST-02.png'
+import oneclick from '../../../../../assets/imgs/ONECLICK-TUTOR ASSEST-02.png'
 
 function Header({ activePage, setActivePage }) {
   const nav = [

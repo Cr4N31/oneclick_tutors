@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import PersonalDetailsPage from '../courseList/PersonalDetailsPage';
-import CourseHeader from "../courseList/CourseHeader";
-import StatBar from '../courseList/StatBar';
-import CourseGrid from '../courseList/CourseGrid';
+import PersonalDetailsPage from '../components/courseList/PersonalDetailsPage'
+import CourseHeader from "../components/courseList/CourseHeader";
+import StatBar from '../components/courseList/StatBar';
+import CourseGrid from '../components/courseList/CourseGrid';
 
 
 const defaultCourses = [

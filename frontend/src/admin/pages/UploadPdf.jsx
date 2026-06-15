@@ -1,7 +1,7 @@
 import { useState } from "react"
-import Header from "../components/pdfupload/Header"
-import UploadComponent from "../components/pdfupload/UploadComponent"
-import Viewer from "../components/pdfupload/Viewer"
+import Header from "../upload/components/pdfupload/Header"
+import UploadComponent from "../upload/components/pdfupload/UploadComponent"
+import Viewer from "../upload/components/pdfupload/Viewer"
 
 function UploadPdf() {
     const [activePage, setActivePage] = useState("#upload")
