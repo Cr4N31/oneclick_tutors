@@ -1,10 +1,10 @@
 function PersonalDetailsPage({ user }) {
-  const details = [
-    { label: "Username", value: user?.username || "Student" },
-    { label: "Email", value: user?.email || "student@example.com" },
-    { label: "Department", value: user?.department || "Not added yet" },
-    { label: "Level", value: user?.level || "Not added yet" },
-  ]
+const details = [
+  { label: "Full Name", value: user?.full_name || "Student" },
+  { label: "Email", value: user?.email || "student@example.com" },
+  { label: "Department", value: user?.department || "Not added yet" },
+  { label: "Level", value: user?.level || "Not added yet" },
+]
 
   return (
     <section className="mt-20 flex flex-col gap-8" data-aos="fade-up">
@@ -12,7 +12,7 @@ function PersonalDetailsPage({ user }) {
         <p className="font-semibold text-[#E87722] text-lg">Student Profile</p>
         <h1 className="text-[#3D0A4F] font-bold text-2xl">Personal Details</h1>
         <p className="font-semibold text-[#3D0A4F]/55">
-          Review the profile information from your mock account.
+          Your registered profile information.
         </p>
       </div>
 

@@ -5,6 +5,7 @@ import LandingPage from "./components/layout/LandingPage"
 import Layout from "./components/layout/Layout"
 import AuthLayout from "./components/layout/AuthLayout"
 import UploadPdf from "./upload/pages/UploadPdf"
+import Loader from "./components/shared/Loader"
 
 const authHashes = ["#auth", "#login", "#register"]
 const landingHashes = ["#home", "#about", "#features", "#pricing", "#contact"]
@@ -13,6 +14,7 @@ const storedUserKey = "oneclick-user"
 
 function App() {
   const [data, setData] = useState('')
+  const [appLoading, setAppLoading] = useState(true)
   const [hash, setHash] = useState(window.location.hash)
   const [mockUser, setMockUser] = useState(() => {
     try {
@@ -70,7 +72,10 @@ function App() {
       .then(res => res.json())
       .then(data => setData(data.message))
       .catch(err => console.error("Error fetching from backend:", err))
+      .finally(() => setAppLoading(false))
   }, [])
+
+  if (appLoading) return <Loader />
 
   return (
   <>

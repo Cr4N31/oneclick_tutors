@@ -8,7 +8,7 @@ function Header({ onToggle, user }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeHash, setActiveHash] = useState(window.location.hash || '#home')
-  const displayName = user?.username || user?.firstName || "Student"
+  const displayName = user?.full_name || "Student"
 
   useEffect(() => {
     const handleScroll = () => {

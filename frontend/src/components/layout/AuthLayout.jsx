@@ -4,6 +4,7 @@ import oneclickIcon from "../../../assets/imgs/ONECLICK-TUTOR ASSEST-03.png"
 import AuthToggle from "../auth/AuthToggle"
 import LoginForm from "../auth/LoginForm"
 import RegisterForm from "../auth/RegisterForm"
+import Loader from "../shared/Loader"
 
 function AuthLayout({ initialMode = "register", onAuthenticated }) {
   const [activeMode, setActiveMode] = useState(initialMode)
@@ -93,10 +94,7 @@ function AuthLayout({ initialMode = "register", onAuthenticated }) {
               <p className="text-red-500 text-xs mb-4 text-center">{error}</p>
             )}
 
-            {loading && (
-              <p className="text-[#3D0A4F]/40 text-xs mb-4 text-center">Please wait...</p>
-            )}
-
+           {loading && <Loader fullScreen={false} />}
             {isLogin ? (
               <LoginForm
                 onSwitch={() => setActiveMode("register")}

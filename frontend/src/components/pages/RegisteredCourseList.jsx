@@ -45,18 +45,19 @@ function normalizeCourse(course, index) {
     return { code, name: name || "Registered course" }
 }
 
-function getInitialCourses(userCourses) {
-    const normalizedCourses = Array.isArray(userCourses)
-        ? userCourses.map(normalizeCourse).filter((course) => course.code.trim())
+function getInitialCourses(user) {
+    const rawCourses = user?.raw_courses || user?.courses;
+    const normalized = Array.isArray(rawCourses)
+        ? rawCourses.map(normalizeCourse).filter((course) => course.code.trim())
         : []
 
-    return normalizedCourses.length >= 9 ? normalizedCourses.slice(0, 12) : defaultCourses
+    return normalized.length >= 9 ? normalized.slice(0, 12) : defaultCourses
 }
 
 function RegisteredCourseList({ user, onUserUpdate }){
     const [editing, setEditing] = useState(false);
-    const [snapshot, setSnapshot] = useState(() => getInitialCourses(user?.courses))
-    const [courses, setCourses] = useState(() => getInitialCourses(user?.courses))
+    const [snapshot, setSnapshot] = useState(() => getInitialCourses(user))
+    const [courses, setCourses] = useState(() => getInitialCourses(user))
 
     const handleEdit = () => {
         setSnapshot(courses);

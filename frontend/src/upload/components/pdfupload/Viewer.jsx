@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, BookOpen, FileText } from 'lucide-react';
+import Loader from '../../../components/shared/Loader';
 
 function Viewer() {
   const [courses, setCourses] = useState([]);
@@ -18,9 +19,7 @@ function Viewer() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center h-screen text-gray-400 text-sm">
-      Loading...
-    </div>
+    <Loader/>
   );
 
   if (courses.length === 0) return (

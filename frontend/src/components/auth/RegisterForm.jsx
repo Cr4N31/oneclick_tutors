@@ -34,16 +34,16 @@ function RegisterForm({ onSwitch, onSubmit }) {
 
     setError("")
 
-    onSubmit?.({
-      authType: "register",
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      level: formData.get("level"),
-      department: formData.get("department"),
-      courses: selectedCourses,
-      email: formData.get("email"),
-    })
-
+  onSubmit?.({
+    authType: "register",
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    level: formData.get("level"),
+    department: formData.get("department"),
+    courses: selectedCourses,
+    email: formData.get("email"),
+    password: formData.get("password"),  // ← add this back
+  })
     event.currentTarget.reset()
   }
 
