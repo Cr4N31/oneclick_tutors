@@ -36,7 +36,6 @@ function RegisterForm({ onSwitch, onSubmit }) {
 
     onSubmit?.({
       authType: "register",
-      username: formData.get("username"),
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       level: formData.get("level"),
@@ -60,16 +59,6 @@ function RegisterForm({ onSwitch, onSubmit }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1 text-[#3D0A4F]/90 text-xs tracking-widest uppercase sm:col-span-2">
-          Username
-          <input
-            type="text"
-            name="username"
-            placeholder="Choose a username"
-            required
-            className="pl-0 py-2 border-b border-[#3D0A4F]/15 focus:border-[#E87722] outline-none text-sm normal-case tracking-normal text-[#3D0A4F] placeholder:text-[#3D0A4F]/30 transition-colors duration-150 bg-transparent"
-          />
-        </label>
 
         <label className="flex flex-col gap-1 text-[#3D0A4F]/90 text-xs tracking-widest uppercase">
           First Name

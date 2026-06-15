@@ -1,7 +1,6 @@
 import { useState } from 'react' 
 
 function LoginForm({ onSwitch, onSubmit }) {
-    const [ username, setUsername ] = useState("");
     const [ emailAddress, setEmailAddress ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ error, setError ] = useState("")
@@ -9,7 +8,7 @@ function LoginForm({ onSwitch, onSubmit }) {
     function handleValidation(e){
         e.preventDefault();
 
-        if(!username || !password || !emailAddress){
+        if(!password || !emailAddress){
             setError("Please fill in all fields")
             return;
         };
@@ -20,11 +19,9 @@ function LoginForm({ onSwitch, onSubmit }) {
 
         onSubmit?.({
           authType: "login",
-          username,
           email: emailAddress,
           password,
         });
-        setUsername("");
         setEmailAddress("");
         setPassword("");
         setError("");
@@ -50,26 +47,6 @@ function LoginForm({ onSwitch, onSubmit }) {
 
         {/* Fields */}
         <div className="flex flex-col gap-5">
-          {/* Username */}
-          <div className="flex flex-col gap-1">
-            <label
-              htmlFor="login-username"
-              className="text-[#3D0A4F]/90 text-xs tracking-widest uppercase"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="login-username"
-              name="username"
-              aria-label="Username"
-              placeholder="Your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="pl-0 py-2 border-b border-[#3D0A4F]/15 focus:border-[#E87722] outline-none text-sm text-[#3D0A4F] placeholder:text-[#3D0A4F]/30 transition-colors duration-150 bg-transparent"
-            />
-          </div>
 
           {/* Email */}
           <div className="flex flex-col gap-1">
