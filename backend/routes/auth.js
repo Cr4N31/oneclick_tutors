@@ -24,13 +24,20 @@ router.post('/register', async (req, res) => {
         }
 
         const password_hash = await bcrypt.hash(password, 10);
-
+        
         const studentRes = await client.query(
-            `INSERT INTO students (full_name, email, password_hash, programme, level)
-             VALUES ($1, $2, $3, $4, $5) RETURNING id
-            `
-            [`${firstName} ${lastName}`, email, password_hash, department, parseInt(level)]
-        );
+        `INSERT INTO students (full_name, email, password_hash, programme, level, raw_courses)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+        [
+          `${firstName} ${lastName}`,
+          email,
+          password_hash,
+          department || null,
+          level ? parseInt(level) : null,
+          JSON.stringify(courses)
+        ]
+      );
+
         const studentId = studentRes.rows[0].id;
 
         for (const courseCode of courses) {
@@ -52,6 +59,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({
             id: studentId,
             username,
+            full_name: `${firstName} ${lastName}`,
             firstName,
             lastName,
             email,
@@ -102,10 +110,12 @@ router.post('/login', async (req, res) => {
 
     res.json({
       id: student.id,
+      username: student.full_name,
       full_name: student.full_name,
       email: student.email,
       level: student.level,
       department: student.programme,
+      raw_courses: student.raw_courses,
       courses: coursesRes.rows,
     });
 
