@@ -18,18 +18,11 @@ async function extractText(buffer) {
 }
 
 function parseCourseText(rawText) {
-  
   const normalized = rawText
-    .replace(/(MODULE\s+\d+)/gi, '\n$1\n')
-    .replace(/(UNIT\s+\d+[^a-z]*)/gi, '\n$1\n');
+    .replace(/(MODULE\s+\d+)/g, '\n$1\n')
+    .replace(/(UNIT\s+\d+[^a-z]*)/g, '\n$1\n');
 
- const lines = normalized.split('\n');
-    lines.forEach((line, i) => {
-    if (line.toUpperCase().includes('MODULE') || line.toUpperCase().includes('UNIT 1')) {
-        console.log(`LINE ${i}: "${line}"`);
-    }
-});
-
+  const lines = normalized.split('\n').map(l => l.trim()).filter(Boolean);
 
   const moduleRegex = /^MODULE\s+(\d+)$/;
   const unitRegex = /^UNIT\s+(\d+)\s*(.*)?$/;
@@ -41,6 +34,11 @@ function parseCourseText(rawText) {
   for (const line of lines) {
     const modMatch = line.match(moduleRegex);
     if (modMatch) {
+      const modNumber = parseInt(modMatch[1]);
+
+      // Skip repeated MODULE headings (running headers/footers)
+      if (currentModule && currentModule.number === modNumber) continue;
+
       if (currentUnit && currentModule) {
         currentModule.units.push(currentUnit);
         currentUnit = null;
@@ -48,8 +46,8 @@ function parseCourseText(rawText) {
       if (currentModule) modules.push(currentModule);
 
       currentModule = {
-        number: parseInt(modMatch[1]),
-        title: `Module ${modMatch[1]}`,
+        number: modNumber,
+        title: `Module ${modNumber}`,
         units: [],
       };
       continue;
@@ -58,11 +56,16 @@ function parseCourseText(rawText) {
     if (currentModule) {
       const unitMatch = line.match(unitRegex);
       if (unitMatch) {
+        const unitNumber = parseInt(unitMatch[1]);
+
+        // Skip repeated UNIT headings
+        if (currentUnit && currentUnit.number === unitNumber) continue;
+
         if (currentUnit) currentModule.units.push(currentUnit);
 
         currentUnit = {
-          number: parseInt(unitMatch[1]),
-          title: unitMatch[2]?.trim() || `Unit ${unitMatch[1]}`,
+          number: unitNumber,
+          title: unitMatch[2]?.trim() || `Unit ${unitNumber}`,
           raw_text: '',
         };
         continue;

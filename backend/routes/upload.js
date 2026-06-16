@@ -10,7 +10,7 @@ router.post('/', upload.single('pdf'), async (req, res) => {
   }
 
   const { courseCode, courseTitle } = req.body;
-
+  console.log('courseCode received:', courseCode, '| length:', courseCode?.length);
   if (!courseCode || !courseTitle) {
     return res.status(400).json({ error: 'courseCode and courseTitle are required.' });
   }

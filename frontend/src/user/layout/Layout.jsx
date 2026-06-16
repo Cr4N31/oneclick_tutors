@@ -5,7 +5,7 @@ import RegisteredCourseList from '../pages/RegisteredCourseList'
 import SummaryPage from '../pages/SummaryPage'
 import Contact from '../components/landing/Contact'
 
-function Layout({ user, onLogout }) {
+function Layout({ user, onLogout, onUserUpdate }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activePage, setActivePage] = useState(() => {
     if (typeof window === 'undefined') return 'courses'
@@ -18,7 +18,7 @@ function Layout({ user, onLogout }) {
 
   const renderPage = () => {
     switch (activePage) {
-      case 'courses': return <RegisteredCourseList user={user} />
+      case 'courses': return <RegisteredCourseList user={user} onUserUpdate={onUserUpdate}/>
       case 'summary': return <SummaryPage user={user}/>
       case 'quiz': return <div className="text-[#3D0A4F]">Quiz page coming soon</div>
       case 'progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>

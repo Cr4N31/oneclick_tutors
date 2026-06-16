@@ -67,6 +67,12 @@ function App() {
     setHash("#login")
   }
 
+  const handleUserUpdate = (updates) => {
+  const updatedUser = { ...mockUser, ...updates }
+  localStorage.setItem(storedUserKey, JSON.stringify(updatedUser))
+  setMockUser(updatedUser)
+}
+
   useEffect(() => {
     fetch("http://localhost:3000/")
       .then(res => res.json())
@@ -82,7 +88,7 @@ function App() {
     {hash === "#upload" ? (
       <UploadPdf />
     ) : isAuthenticated && !showLanding ? (
-      <Layout user={mockUser} onLogout={handleLogout} />
+      <Layout onUserUpdate={handleUserUpdate} user={mockUser} onLogout={handleLogout} />
     ) : !isAuthenticated && showAuth ? (
       <AuthLayout
         key={authMode}

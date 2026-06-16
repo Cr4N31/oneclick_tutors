@@ -8,7 +8,17 @@ function SummaryPage({ user }) {
   const [selectedUnit, setSelectedUnit] = useState(null)
   const [selectedModule, setSelectedModule] = useState(null)
 
-  const courses = user?.courses?.length > 0 ? user.courses : []
+  const courses = (() => {
+  const raw = user?.raw_courses
+    if (Array.isArray(raw) && raw.length > 0) {
+        return raw.map((c, i) => 
+        typeof c === 'string' 
+            ? { code: c, title: 'Registered course' } 
+            : c
+        )
+    }
+    return user?.courses || []
+  })()
 
   const handleSelectCourse = (course) => {
     setSelectedCourse(course)
