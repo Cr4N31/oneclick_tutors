@@ -12,7 +12,7 @@ function ModuleUnitSelector({ courseCode, selectedUnit, onSelectUnit }) {
     setLoading(true)
     const cleanCode = courseCode.replace(/\s+/g, '')
 
-    fetch(`http://localhost:3000/api/courses/${cleanCode}/structure`)
+    fetch(`https://oneclick-tutors-backend.onrender.com/api/courses/${cleanCode}/structure`)
       .then(res => res.json())
       .then(data => {
         setStructure(data)

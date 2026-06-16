@@ -8,7 +8,7 @@ function Viewer() {
   const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/viewer')
+    fetch('https://oneclick-tutors-backend.onrender.com/api/viewer')
       .then(res => res.json())
       .then(data => { setCourses(data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });

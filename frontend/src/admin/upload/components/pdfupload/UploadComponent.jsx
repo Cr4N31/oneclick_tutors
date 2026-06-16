@@ -42,7 +42,7 @@ function UploadComponent() {
     formData.append('courseTitle', courseTitle);
 
     try {
-      const res = await fetch('http://localhost:3000/api/upload', {
+      const res = await fetch('https://oneclick-tutors-backend.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
       });

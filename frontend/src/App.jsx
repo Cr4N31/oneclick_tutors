@@ -74,7 +74,7 @@ function App() {
 }
 
   useEffect(() => {
-    fetch("http://localhost:3000/")
+    fetch("https://oneclick-tutors-backend.onrender.com")
       .then(res => res.json())
       .then(data => setData(data.message))
       .catch(err => console.error("Error fetching from backend:", err))

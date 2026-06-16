@@ -13,7 +13,7 @@ function SummaryDisplay({ unitId, unitTitle, moduleNumber, unitNumber }) {
     setError(null)
     setSummary(null)
 
-    fetch(`http://localhost:3000/api/summary/${unitId}`)
+    fetch(`https://oneclick-tutors-backend.onrender.com/api/summary/${unitId}`)
       .then(res => res.json())
       .then(data => {
         if (data.error) {
