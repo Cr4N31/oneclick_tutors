@@ -11,7 +11,15 @@ const summaryRoute = require('./routes/summary')
 const courseStructureRoute = require('./routes/courseStructure');
 
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5174',
+    'http://localhost:5173',
+    'https://oneclick-tutors.vercel.app',
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use('/api/upload', uploadRoute);
