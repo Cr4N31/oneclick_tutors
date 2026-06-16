@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const app = express();
 const PORT = 3000;
 const pool = require('./config/db');
@@ -8,7 +9,6 @@ const viewerRoute = require('./routes/viewer');
 const authRoute = require('./routes/auth')
 const summaryRoute = require('./routes/summary')
 const courseStructureRoute = require('./routes/courseStructure');
-
 
 
 app.use(cors());
