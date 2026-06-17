@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function generateSummary(unitTitle, rawText, retries = 3) {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-flash-lite',
     generationConfig: {
       responseMimeType: 'application/json',
       maxOutputTokens: 8192,
@@ -34,11 +34,15 @@ async function generateSummary(unitTitle, rawText, retries = 3) {
             const result = await model.generateContent(prompt);
             return JSON.parse(result.response.text());
         } catch (err) {
-            if (err.message.includes('503') && attempt < retries) {
-                console.log(`Gemini overloaded, retrying (${attempt}/${retries})...`);
-                await new Promise(r => setTimeout(r, 2000 * attempt));
+            const is503 = err.message.includes('503');
+            const is429 = err.message.includes('429');
+            
+            if (is429) throw err; // Don't retry rate limits
+            if (is503 && attempt < retries) {
+            console.log(`Gemini overloaded, retrying (${attempt}/${retries})...`);
+            await new Promise(r => setTimeout(r, 2000 * attempt));
             } else {
-                throw err;
+            throw err;
             }
         }
     }
