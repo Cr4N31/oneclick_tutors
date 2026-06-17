@@ -8,7 +8,7 @@ async function generateSummary(unitTitle, rawText, retries = 3) {
     model: 'gemini-2.5-flash',
     generationConfig: {
       responseMimeType: 'application/json',
-      maxOutputTokens: 4096,
+      maxOutputTokens: 8192,
     },
   });
 
