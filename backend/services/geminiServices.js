@@ -20,6 +20,18 @@ Below is the raw content of a study unit titled "${unitTitle}". Generate a struc
 - "key_concepts": An array of 5-8 key concepts/topics covered (short phrases).
 - "definitions": An array of objects with "term" and "definition" for important terms defined in the unit (5-10 items).
 - "keynotes": An array of 5-8 important points/takeaways a student should remember for exams.
+- "formulas": An array of objects for any mathematical or scientific formulas found in the unit. Each object should have:
+    - "name": the name of the formula or law (e.g. "Stefan-Boltzmann Law")
+    - "expression": the formula itself as a readable string (e.g. "P = σeAT⁴")
+    - "variables": an array of objects with "symbol" and "meaning" for each variable
+    - "example": a worked example using the formula with step-by-step solution, based on examples in the material or a similar one you formulate from it
+  If no formulas are present in the unit, return an empty array for this field.
+
+Important instructions:
+- For science, physics, chemistry, and mathematics units, pay special attention to formulas, equations, laws, and worked examples in the material.
+- When writing worked examples, show each calculation step clearly.
+- Base all content strictly on the provided unit material — do not introduce concepts not covered in the text.
+- Return ONLY valid JSON, no markdown formatting, no backticks, no extra text.
 
 Return ONLY valid JSON.
 
