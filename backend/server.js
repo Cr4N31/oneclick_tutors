@@ -8,6 +8,7 @@ const uploadRoute = require('./routes/upload');
 const viewerRoute = require('./routes/viewer');
 const authRoute = require('./routes/auth')
 const summaryRoute = require('./routes/summary')
+const quizRoute = require('./routes/quiz');
 const courseStructureRoute = require('./routes/courseStructure');
 
 
@@ -26,6 +27,7 @@ app.use('/api/upload', uploadRoute);
 app.use('/api/viewer', viewerRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/summary', summaryRoute);
+app.use('/api/quiz', quizRoute);
 app.use('/api/courses', courseStructureRoute);
 
 

@@ -48,4 +48,53 @@ async function generateSummary(unitTitle, rawText, retries = 3) {
     }
 }
 
-module.exports = { generateSummary };
+async function generateQuiz(unitTitle, rawText, difficulty) {
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash-lite',
+    generationConfig: {
+      responseMimeType: 'application/json',
+      maxOutputTokens: 4096,
+    }
+  });
+
+  const difficultyGuide = {
+    beginner: `Straightforward recall questions based directly on definitions, basic facts, and key terms in the text. 
+If formulas are present, ask students to identify what a variable means or state what a law/formula is called.`,
+    intermediate: `Questions requiring understanding and application of concepts. 
+If formulas are present, generate calculation-based questions where students must apply the formula to solve a problem using values similar to examples in the text. Show what values are given and ask for the unknown.`,
+    pro: `Challenging questions requiring deep analysis, inference, and multi-step reasoning. 
+If formulas are present, generate complex calculation questions that combine multiple formulas or require unit conversions before solving. Questions should mirror the difficulty of NOUN exam standard problems.`
+  };
+
+  const prompt = `Generate 10 multiple choice questions for NOUN students on this unit: "${unitTitle}".
+
+Difficulty: ${difficulty} — ${difficultyGuide[difficulty]}
+
+Important:
+- Scan the content for any mathematical or scientific formulas, equations, or laws.
+- For beginner: at least 1-2 questions should test knowledge of formula names or variable meanings if formulas exist.
+- For intermediate: at least 4-5 questions must be calculation-based if formulas exist. Present a problem with given values and ask for the answer.
+- For pro: at least 6-7 questions must be formula-based, multi-step calculations if formulas exist.
+- For non-science units with no formulas, focus on conceptual understanding and application.
+- All questions must be based strictly on the provided content.
+
+Return a JSON array of exactly 10 objects. Each object must have:
+"question": the question text (include given values for calculation questions)
+"options": object with keys "A", "B", "C", "D" as the four answer choices (include units for numerical answers)
+"correct_answer": one of "A", "B", "C", or "D"
+"explanation": brief explanation showing the calculation steps if applicable
+
+UNIT CONTENT:
+${rawText.substring(0, 8000)}`;
+
+  const result = await model.generateContent(prompt);
+  const questions = JSON.parse(result.response.text());
+
+  if (!Array.isArray(questions) || questions.length === 0) {
+    throw new Error('Invalid quiz response from AI');
+  }
+
+  return questions;
+}
+
+module.exports = { generateSummary, generateQuiz };

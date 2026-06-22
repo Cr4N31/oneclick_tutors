@@ -20,7 +20,7 @@ function CourseSelector({ courses, selectedCourse, onSelect }) {
               }`}
             >
               <p className="text-[#3D0A4F] font-semibold text-sm">{course.code}</p>
-              <p className="text-[#3D0A4F]/50 text-xs mt-1 truncate">{course.title || course.name}</p>
+              <p className="text-[#3D0A4F]/50 text-sm mt-1 truncate">{course.title || course.name}</p>
             </button>
           )
         })}
