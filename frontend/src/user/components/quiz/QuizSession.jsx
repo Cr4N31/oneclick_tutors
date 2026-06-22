@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import Layout from '../../layout/Layout'
-import { Loader } from 'lucide-react'
+import Loader from '../../shared/Loader'
 
 function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, onRetry }) {
   const [questions, setQuestions] = useState([])
