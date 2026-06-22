@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import Layout from '../../layout/Layout'
+import { Loader } from 'lucide-react'
 
 function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, onRetry }) {
   const [questions, setQuestions] = useState([])
@@ -60,11 +62,7 @@ function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, 
     return 'border-[#3D0A4F]/10 text-[#3D0A4F]/40'
   }
 
-  if (loading) return (
-    <div className="flex items-center justify-center py-16">
-      <p className="text-[#3D0A4F]/40 text-sm">Loading quiz...</p>
-    </div>
-  )
+  if (loading) return <Loader/>
 
   if (error) return <p className="text-red-500 text-sm">{error}</p>
 
