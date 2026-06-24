@@ -64,7 +64,7 @@ function TakeAQuizPage({ user }) {
           {selectedUnit && (
             <div className="flex flex-col gap-3">
               <h3 className="text-[#3D0A4F] font-semibold text-xl">Select Difficulty</h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-col gap-3">
                 {difficulties.map((d) => (
                   <button
                     key={d.key}
