@@ -12,7 +12,7 @@ function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, 
 
   useEffect(() => {
     setLoading(true)
-    fetch(`http://localhost:3000/api/quiz/${unitId}?difficulty=${difficulty}`)
+    fetch(`https://oneclick-tutors-backend.onrender.com/api/quiz/${unitId}?difficulty=${difficulty}`)
       .then(res => res.json())
       .then(data => {
         if (data.error) { setError(data.error); return; }
