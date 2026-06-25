@@ -1,12 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect, use } from 'react'
 import CourseSelector from '../components/summary/CourseSelector'
 import ModuleUnitSelector from '../components/summary/ModuleUnitSelector'
 import SummaryDisplay from '../components/summary/SummaryDisplay'
 
 function SummaryPage({ user }) {
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const [selectedUnit, setSelectedUnit] = useState(null)
-  const [selectedModule, setSelectedModule] = useState(null)
+  const [selectedCourse, setSelectedCourse] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('summary_course')) || null } catch { return null }
+  })
+  const [selectedUnit, setSelectedUnit] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('summary_unit')) || null } catch { return null }
+  })
+  const [selectedModule, setSelectedModule] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('summary_module')) || null } catch { return null }
+  })
+
+
+  useEffect(() => {
+    localStorage.setItem('summary_course', JSON.stringify(selectedCourse))
+  }, [selectedCourse])
+
+  useEffect(() => {
+    localStorage.setItem('summary_unit', JSON.stringify(selectedUnit))
+  }, [selectedUnit])
+
+  useEffect(() => {
+    localStorage.setItem('summary_module', JSON.stringify(selectedModule))
+  }, [selectedModule])
 
   const courses = (() => {
   const raw = user?.raw_courses

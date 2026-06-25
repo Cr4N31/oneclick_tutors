@@ -1,14 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect, use } from 'react'
 import CourseSelector from '../components/summary/CourseSelector'
 import ModuleUnitSelector from '../components/summary/ModuleUnitSelector'
 import QuizSession from '../components/quiz/QuizSession'
 
 function TakeAQuizPage({ user }) {
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const [selectedUnit, setSelectedUnit] = useState(null)
-  const [selectedModule, setSelectedModule] = useState(null)
-  const [difficulty, setDifficulty] = useState(null)
+  const [selectedCourse, setSelectedCourse] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('quiz_course')) || null } catch { return null }
+  })
+  const [selectedUnit, setSelectedUnit] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('quiz_unit')) || null } catch { return null }
+  })
+  const [selectedModule, setSelectedModule] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('quiz_module')) || null } catch { return null }
+  })
+  const [difficulty, setDifficulty] = useState(() => {
+    return localStorage.getItem('quiz_difficulty') || null
+  })
   const [quizStarted, setQuizStarted] = useState(false)
+
+  useEffect(() => {
+    localStorage.setItem('quiz_course', JSON.stringify(selectedCourse))
+  }, [selectedCourse])
+
+  useEffect(() => {
+    localStorage.setItem('quiz_unit', JSON.stringify(setSelectedUnit))
+  }, {selectedUnit})
+
+  useEffect(() => {
+    localStorage.setItem('quiz_module', JSON.stringify(selectedModule))
+  }, [selectedModule])
+
+  useEffect(() => {
+    if(difficulty) localStorage.setItem('quiz_difficulty', difficulty)
+  }, [difficulty])
 
   const courses = user?.courses?.length > 0 ? user.courses : []
 
