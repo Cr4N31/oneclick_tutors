@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import API_BASE from '../../config'
 import Loader from '../../shared/Loader'
 
-function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, onRetry }) {
+function QuizSession({ unitId, unitTitle, moduleNumber, moduleId, courseId, unitNumber, difficulty, onRetry }) {
   const [questions, setQuestions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -21,6 +22,32 @@ function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, 
       .catch(() => setError('Failed to load quiz.'))
       .finally(() => setLoading(false))
   }, [unitId, difficulty])
+
+  const saveAttempt = async (finalAnswers) => {
+  const user = JSON.parse(localStorage.getItem('oneclick-user'));
+   console.log('Saving attempt:', { user, unitId, moduleId, courseId, difficulty });
+  if (!user?.id) return;
+
+  try {
+    await fetch(`${API_BASE}/api/quiz/${unitId}?difficulty=${difficulty}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: user.id,
+        unit_id: unitId,
+        module_id: moduleId,
+        course_id: courseId,
+        difficulty,
+        score: finalAnswers.filter(a => a.isCorrect).length,
+        total: finalAnswers.length,
+        answers: finalAnswers,
+        scope: 'unit'
+      })
+    });
+  } catch (err) {
+    console.error('Failed to save attempt:', err.message);
+  }
+};
 
   const handleSelect = (option) => {
     if (selected) return // prevent changing answer
@@ -47,6 +74,7 @@ function QuizSession({ unitId, unitTitle, moduleNumber, unitNumber, difficulty, 
       setCurrent(current + 1)
       setSelected(null)
     } else {
+      saveAttempt(newAnswers)
       setShowResult(true)
     }
   }

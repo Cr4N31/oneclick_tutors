@@ -5,6 +5,7 @@ function ModuleUnitSelector({ courseCode, selectedUnit, onSelectUnit }) {
   const [structure, setStructure] = useState(null)
   const [loading, setLoading] = useState(true)
   const [expandedModule, setExpandedModule] = useState(null)
+  const [courseId, setCourseId] = useState(null);
 
   useEffect(() => {
     if (!courseCode) return
@@ -16,6 +17,7 @@ function ModuleUnitSelector({ courseCode, selectedUnit, onSelectUnit }) {
       .then(res => res.json())
       .then(data => {
         setStructure(data)
+        setCourseId(data.id)
         if (data.modules?.length > 0) {
           setExpandedModule(data.modules[0].id)
         }
@@ -62,7 +64,7 @@ function ModuleUnitSelector({ courseCode, selectedUnit, onSelectUnit }) {
                   return (
                     <button
                       key={unit.id}
-                      onClick={() => onSelectUnit(unit, mod)}
+                      onClick={() => onSelectUnit(unit, mod, courseId)}
                       className={`w-full text-left px-6 py-2.5 text-sm transition-colors border-b border-[#3D0A4F]/4 last:border-0 ${
                         isActive
                           ? 'text-[#E87722] font-medium bg-[#E87722]/5'

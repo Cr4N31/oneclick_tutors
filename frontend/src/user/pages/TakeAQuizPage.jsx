@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import CourseSelector from '../components/summary/CourseSelector'
 import ModuleUnitSelector from '../components/summary/ModuleUnitSelector'
 import QuizSession from '../components/quiz/QuizSession'
@@ -7,15 +7,23 @@ function TakeAQuizPage({ user }) {
   const [selectedCourse, setSelectedCourse] = useState(() => {
     try { return JSON.parse(localStorage.getItem('quiz_course')) || null } catch { return null }
   })
+
   const [selectedUnit, setSelectedUnit] = useState(() => {
     try { return JSON.parse(localStorage.getItem('quiz_unit')) || null } catch { return null }
   })
+
   const [selectedModule, setSelectedModule] = useState(() => {
     try { return JSON.parse(localStorage.getItem('quiz_module')) || null } catch { return null }
   })
+
+  const [selectedCourseId, setSelectedCourseId] = useState(() => {
+  return localStorage.getItem('quiz_course_id') || null
+  })
+
   const [difficulty, setDifficulty] = useState(() => {
     return localStorage.getItem('quiz_difficulty') || null
   })
+
   const [quizStarted, setQuizStarted] = useState(false)
 
   useEffect(() => {
@@ -23,42 +31,51 @@ function TakeAQuizPage({ user }) {
   }, [selectedCourse])
 
   useEffect(() => {
-    localStorage.setItem('quiz_unit', JSON.stringify(setSelectedUnit))
-  }, {selectedUnit})
+    localStorage.setItem('quiz_unit', JSON.stringify(selectedUnit))
+  }, [selectedUnit])
 
   useEffect(() => {
     localStorage.setItem('quiz_module', JSON.stringify(selectedModule))
   }, [selectedModule])
 
   useEffect(() => {
-    if(difficulty) localStorage.setItem('quiz_difficulty', difficulty)
+  if (selectedCourseId) localStorage.setItem('quiz_course_id', selectedCourseId)
+  }, [selectedCourseId])
+
+  useEffect(() => {
+    if (difficulty) localStorage.setItem('quiz_difficulty', difficulty)
   }, [difficulty])
 
-  const courses = user?.courses?.length > 0 ? user.courses : []
+  const courses = (() => {
+    const raw = user?.raw_courses
+    if (Array.isArray(raw) && raw.length > 0) {
+      return raw.map(c => typeof c === 'string' ? { code: c, title: 'Registered course' } : c)
+    }
+    return user?.courses || []
+  })()
 
   const handleSelectCourse = (course) => {
     setSelectedCourse(course)
     setSelectedUnit(null)
     setSelectedModule(null)
+    setSelectedCourseId(null)
+    localStorage.removeItem('quiz_course_id')
     setDifficulty(null)
     setQuizStarted(false)
   }
 
-  const handleSelectUnit = (unit, module) => {
+  const handleSelectUnit = (unit, module, courseId) => {
     setSelectedUnit(unit)
     setSelectedModule(module)
+    setSelectedCourseId(courseId)
     setDifficulty(null)
     setQuizStarted(false)
-  }
-
-  const handleStartQuiz = () => {
-    if (!difficulty) return
-    setQuizStarted(true)
   }
 
   const handleRetry = () => {
     setQuizStarted(false)
     setDifficulty(null)
+    localStorage.removeItem('quiz_difficulty')
   }
 
   const difficulties = [
@@ -100,7 +117,7 @@ function TakeAQuizPage({ user }) {
                     }`}
                   >
                     <p className="text-[#3D0A4F] font-semibold text-lg">{d.label}</p>
-                    <p className="text-[#E87722]/100 font-base text-sm mt-1">{d.desc}</p>
+                    <p className="text-[#E87722] text-sm mt-1">{d.desc}</p>
                   </button>
                 ))}
               </div>
@@ -109,7 +126,7 @@ function TakeAQuizPage({ user }) {
 
           {difficulty && (
             <button
-              onClick={handleStartQuiz}
+              onClick={() => setQuizStarted(true)}
               className="w-full bg-[#3D0A4F] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#E87722] transition-colors duration-200"
             >
               Start Quiz
@@ -117,14 +134,18 @@ function TakeAQuizPage({ user }) {
           )}
         </>
       ) : (
-        <QuizSession
-          unitId={selectedUnit.id}
-          unitTitle={selectedUnit.title}
-          moduleNumber={selectedModule.module_number}
-          unitNumber={selectedUnit.unit_number}
-          difficulty={difficulty}
-          onRetry={handleRetry}
-        />
+        selectedUnit && selectedModule && (
+          <QuizSession
+            unitId={selectedUnit.id}
+            unitTitle={selectedUnit.title}
+            moduleNumber={selectedModule.module_number}
+            moduleId={selectedModule.id}
+            courseId={selectedCourseId}
+            unitNumber={selectedUnit.unit_number}
+            difficulty={difficulty}
+            onRetry={handleRetry}
+          />
+        )
       )}
     </div>
   )

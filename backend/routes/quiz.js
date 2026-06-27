@@ -3,6 +3,25 @@ const router = express.Router();
 const pool = require('../config/db');
 const { generateQuiz } = require('../services/geminiServices');
 
+
+router.post('/attempt', async(req, res) => {
+  const { student_id, unit_id, module_id, course_id, difficulty, score, total, answers, scope } = req.body;
+
+  try {
+    await pool.query(
+      `INSERT INTO quiz_attempts (student_id, unit_id, module_id, course_id, difficulty, score, total, answers, scope)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [student_id, unit_id, module_id, course_id, difficulty, score, total, JSON.stringify(answers), scope || 'unit']
+    );
+
+    res.status(201).json({ message: 'Attempt saved'});
+  } catch(err){
+    console.error('Attempt save error:', err.message);
+    res.status(500).json({ error: 'Failed to save attempt'})
+  }
+});
+
+
 // GET /api/quiz/:unitId?difficulty=beginner
 router.get('/:unitId', async (req, res) => {
   const { unitId } = req.params;
