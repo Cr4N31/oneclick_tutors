@@ -29,21 +29,23 @@ function QuizSession({ unitId, unitTitle, moduleNumber, moduleId, courseId, unit
   if (!user?.id) return;
 
   try {
-    await fetch(`${API_BASE}/api/quiz/${unitId}?difficulty=${difficulty}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        student_id: user.id,
-        unit_id: unitId,
-        module_id: moduleId,
-        course_id: courseId,
-        difficulty,
-        score: finalAnswers.filter(a => a.isCorrect).length,
-        total: finalAnswers.length,
-        answers: finalAnswers,
-        scope: 'unit'
-      })
-    });
+   const res = await fetch(`${API_BASE}/api/quiz/attempt`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      student_id: user.id,
+      unit_id: unitId,
+      module_id: moduleId,
+      course_id: courseId,
+      difficulty,
+      score: finalAnswers.filter(a => a.isCorrect).length,
+      total: finalAnswers.length,
+      answers: finalAnswers,
+      scope: 'unit'
+    })
+  });
+  const data = await res.json();
+  console.log('Attempt response:', res.status, data);
   } catch (err) {
     console.error('Failed to save attempt:', err.message);
   }

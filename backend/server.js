@@ -10,6 +10,7 @@ const authRoute = require('./routes/auth')
 const summaryRoute = require('./routes/summary')
 const quizRoute = require('./routes/quiz');
 const progressRoute = require('./routes/progress');
+const progressRoute = require('./routes/progress');
 const courseStructureRoute = require('./routes/courseStructure');
 
 
@@ -29,6 +30,7 @@ app.use('/api/viewer', viewerRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/summary', summaryRoute);
 app.use('/api/quiz', quizRoute);
+app.use('/api/progress', progressRoute);
 app.use('/api/progress', progressRoute);
 app.use('/api/courses', courseStructureRoute);
 

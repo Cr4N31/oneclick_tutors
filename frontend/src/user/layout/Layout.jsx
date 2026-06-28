@@ -4,6 +4,7 @@ import Sidebar from '../shared/Sidebar'
 import RegisteredCourseList from '../pages/RegisteredCourseList'
 import SummaryPage from '../pages/SummaryPage'
 import TakeAQuizPage from '../pages/TakeAQuizPage'
+import TrackProgress from '../pages/TrackProgress'
 import Contact from '../components/landing/Contact'
 
 function Layout({ user, onLogout, onUserUpdate }) {
@@ -22,7 +23,7 @@ function Layout({ user, onLogout, onUserUpdate }) {
       case 'courses': return <RegisteredCourseList user={user} onUserUpdate={onUserUpdate}/>
       case 'summary': return <SummaryPage user={user}/>
       case 'quiz': return <TakeAQuizPage user={user}/>
-      case 'progress': return <div className="text-[#3D0A4F]">Progress page coming soon</div>
+      case 'progress': return <TrackProgress user={user}/>
       case 'examCondition': return <div className="text-[#3D0A4F]">Exam condition page coming soon</div>
       case 'contact' : return <Contact/>
       default: return <RegisteredCourseList />
